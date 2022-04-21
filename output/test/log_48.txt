@@ -1,0 +1,9 @@
+2022-04-21 14:49:08,074 
+Namespace(alpha=0.1, batch_size=64, bit=48, ckp='output/weights_48', crop_size=224, data={'train_set': {'list_path': 'data/coco/train.txt', 'batch_size': 64}, 'database': {'list_path': 'data/coco/database.txt', 'batch_size': 64}, 'test': {'list_path': 'data/coco/test.txt', 'batch_size': 64}}, data_path='/home/super/public/wht/datasets/COCO2014/', dataset='coco', de_step=50, debug_steps=50, epoch=150, eval=True, eval_epoch=10, last_epoch=0, learning_rate=0.001, log_path='logs/', model='HashNet', momentum=0.9, num_class=80, num_train=10000, optimizer='SGD', resize_size=256, resume=None, save_path='checkpoints/', seed=2000, step_continuation=20, topK=5000, weight_decay=0.0005)
+2022-04-21 14:49:08,074 ----- world_size = 2, local_rank = 0
+2022-04-21 14:49:09,459 ----- Total # of train batch (single gpu): 157
+2022-04-21 14:49:09,459 ----- Total # of test batch (single gpu): 79
+2022-04-21 14:49:09,459 ----- Total # of base batch (single gpu): 1754
+2022-04-21 14:49:10,069 ----- Pretrained: Load model state from output/weights_48.pdparams
+2022-04-21 14:49:10,069 ----- Start Validating
+2022-04-21 14:53:56,065 EVAL-HashNet, bit:48, dataset:coco, MAP:0.715
