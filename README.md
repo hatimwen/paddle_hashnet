@@ -92,7 +92,7 @@ sh scripts/test_single_gpu.sh
 
 ### step4: 训练模型
 
-- 多卡，直接运行该脚本：
+- 多卡，直接运行该脚本（本项目运行场景为双卡，因此建议用双卡跑此脚本复现）：
 
 ```shell
 sh scripts/train_multi_gpu.sh
