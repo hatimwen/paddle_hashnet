@@ -21,7 +21,7 @@ class DecreaseLRScheduler(LRScheduler):
                  learning_rate,
                  start_lr,
                  de_step=50,
-                 gamma=0.1):
+                 gamma=0.5):
         """init DecreaseLRScheduler """
         self.start_lr = start_lr
         self.de_step = de_step
