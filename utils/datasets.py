@@ -68,11 +68,6 @@ class ImageList(Dataset):
     def __len__(self):
         return len(self.imgs)
 
-    def get_img(self, index):
-        path, _ = self.imgs[index]
-        img = Image.open(path).convert('RGB')
-        return img, path
-
 
 def image_transform(resize_size, crop_size, data_set):
     if data_set == "train_set":
