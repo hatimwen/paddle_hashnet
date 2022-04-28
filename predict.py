@@ -57,7 +57,7 @@ def get_arguments():
     return arguments
 
 @paddle.no_grad()
-def predict(model, image, database_dataset, database_loader, path='./output'):
+def predict(model, image, database_dataset, database_loader, path='./output', bit=64):
     """
     Predict mateched picture for each image.
     """
@@ -65,20 +65,20 @@ def predict(model, image, database_dataset, database_loader, path='./output'):
     img_code = model(image).sign().numpy()
 
     # compute bits code for database
-    code_path = os.path.join(path, "database_code.npy")
+    code_path = os.path.join(path, "database_code_{}.npy".format(bit))
     if os.path.isfile(code_path):
         database_code = np.load(code_path)
         print("----- Load code of database from {}".format(code_path))
     else:
         print("----- Not Found: code and label of database!")
-        print("----- Ready to compute bits code for database")
+        print("----- Ready to compute {} bits code for database".format(bit))
         bs, clses = [], []
         for img, cls, _ in tqdm(database_loader, desc="Computing Database Code"):
             clses.append(cls)
             bs.append(model(img))
         database_code, _ =  paddle.concat(bs).sign().numpy(), paddle.concat(clses).numpy()
         np.save(code_path, database_code)
-        print("----- Save code and label of database in path: {}".format(path))
+        print("----- Save code and label of database in path: {}".format(code_path))
 
     # matching
     hamm = CalcHammingDist(database_code, img_code)
@@ -114,12 +114,12 @@ def main(config):
     img = eval_transforms(image)
     img = img.expand([1] + img.shape)
 
-    pic, hamm_min = predict(model, img, database_dataset, database_loader, config.save_path)
+    pic, hamm_min = predict(model, img, database_dataset, database_loader, config.save_path, config.bit)
     return pic, hamm_min
 
 if __name__ == "__main__":
     config = get_arguments()
-    if not os.path.exists(config.save_path):
+    if config.save_path is not None and not os.path.exists(config.save_path):
         os.makedirs(config.save_path, exist_ok=True)
     path, hamm_min = main(config)
     print(f"----- Predicted Hamm_min: {hamm_min}")

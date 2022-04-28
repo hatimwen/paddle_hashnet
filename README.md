@@ -106,9 +106,9 @@ sh scripts/train_single_gpu.sh
 
 ### step5: 验证预测
 
-- 由于为数据库编码用时较长，因此已将通过 HashNet 编码得到的数据库编码存在 [./output/database_code.npy](output/database_code.npy) 。亦可将其删去后运行 [predict.py](predict.py) ，会在第一次预测的时候自动保存数据库编码。
+- 由于为数据库编码用时较长，因此已将通过 各个bits 的 HashNet 编码得到的数据库编码存在 `./output/database_code_*.npy` 。亦可将其删去后运行 [predict.py](predict.py) ，会在第一次预测的时候自动保存数据库编码。
 
-- 验证预测的命令如下：
+- 以 64 bits 为例，验证预测的命令如下：
 
 ```shell
 python predict.py \
@@ -169,7 +169,10 @@ python predict.py \
         |-- weights_32.pdparams     # 32bits的模型权重
         |-- weights_48.pdparams     # 48bits的模型权重
         |-- weights_64.pdparams     # 64bits的模型权重
-        |-- database_code.npy       # 数据库通过HashNet得到的编码
+        |-- database_code_16.npy       # 数据库通过HashNet得到的16bits编码
+        |-- database_code_32.npy       # 数据库通过HashNet得到的32bits编码
+        |-- database_code_48.npy       # 数据库通过HashNet得到的48bits编码
+        |-- database_code_64.npy       # 数据库通过HashNet得到的64bits编码
     |-- scripts
         |-- test_multi_gpu.sh   # 多卡测试脚本
         |-- test_single_gpu.sh  # 单卡测试脚本
