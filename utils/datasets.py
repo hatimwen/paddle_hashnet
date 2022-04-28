@@ -49,14 +49,14 @@ def config_dataset(config):
         config.num_class = 20
 
     config.data = {
-        "train_set": {"list_path": "data/" + config.dataset + "/train.txt", "batch_size": config.batch_size},
-        "database": {"list_path": "data/" + config.dataset + "/database.txt", "batch_size": config.batch_size},
-        "test": {"list_path": "data/" + config.dataset + "/test.txt", "batch_size": config.batch_size}}
+        "train_set": {"list_path": os.path.join("data", config.dataset, "train.txt"), "batch_size": config.batch_size},
+        "database": {"list_path": os.path.join("data", config.dataset, "database.txt"), "batch_size": config.batch_size},
+        "test": {"list_path": os.path.join("data", config.dataset, "test.txt"), "batch_size": config.batch_size}}
     return config
 
 class ImageList(Dataset):
     def __init__(self, data_path, image_list, transform):
-        self.imgs = [(os.path.join(data_path + val.split()[0]), np.array([int(la) for la in val.split()[1:]])) for val in image_list]
+        self.imgs = [(os.path.join(data_path, val.split()[0]), np.array([int(la) for la in val.split()[1:]])) for val in image_list]
         self.transform = transform
 
     def __getitem__(self, index):
