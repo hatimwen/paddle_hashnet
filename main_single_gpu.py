@@ -34,14 +34,14 @@ def get_arguments():
     parser.add_argument('--bit', type=int, default=16, choices=[16, 32, 48, 64])
     parser.add_argument('--seed', type=int, default=2000, help="NOTE: IMPORTANT TO REPRODUCE THE RESULTS!")
     parser.add_argument('--eval', action='store_true', default=False)
-    parser.add_argument('--ckp', type=str, default=None, help="checkpoint file")
+    parser.add_argument('--pretrained', type=str, default=None, help="checkpoint file")
     parser.add_argument('--resume', type=str, default=None, help="checkpoint file to resume")
     parser.add_argument('--debug_steps', type=int, default=50, help="After each debug_steps, show the train loss")
 
     # data settings
     parser.add_argument('--dataset', type=str, default="coco")
-    parser.add_argument('--data_path', type=str,
-                        default="./datasets/COCO2014/")
+    parser.add_argument('--data-path', type=str,
+                        default="./datasets/COCO2014/", help="data_path")
                         #NOTE: change to your own data_path!
     parser.add_argument('--num_class', type=int, default=80)
     parser.add_argument('--topK', type=int, default=5000)
@@ -49,7 +49,7 @@ def get_arguments():
     parser.add_argument('--resize_size', type=int, default=256)
 
     # training settings
-    parser.add_argument('-bs', '--batch_size', type=int, default=64)
+    parser.add_argument('-bs', '--batch-size', type=int, default=64, help="batch_size")
     parser.add_argument('--last_epoch', type=int, default=0)
     parser.add_argument('-ee', '--eval_epoch', type=int, default=10, help="After each eval_epoch, one eval process is performed")
     parser.add_argument('--alpha', type=float, default=0.1, help="Determines the tradeoff between losses")
@@ -60,8 +60,9 @@ def get_arguments():
     parser.add_argument('-op', '--optimizer', type=str, default="SGD", choices=["SGD", "RMSProp", "AdamW"])
     parser.add_argument('-wd', '--weight_decay', type=float, default=5e-4)
     parser.add_argument('--momentum', type=float, default=0.9)
-    parser.add_argument('--save_path', type=str, default="checkpoints/")
+    # parser.add_argument('--save_path', type=str, default="checkpoints/")
     parser.add_argument('--log_path', type=str, default="logs/")
+    parser.add_argument('--output-dir', type=str, default="checkpoints/", help='output_dir')
     arguments = parser.parse_args()
     return arguments
 
@@ -111,7 +112,6 @@ def main():
         mode = "train"
 
     log_path = '{}/{}-{}-{}'.format(config.log_path, mode, config.bit, time.strftime('%Y%m%d-%H-%M-%S'))
-    save_path = '{}/{}-{}-{}'.format(config.save_path, mode, config.bit, time.strftime('%Y%m%d-%H-%M-%S'))
     if not os.path.exists(log_path):
         os.makedirs(log_path, exist_ok=True)
     
@@ -140,14 +140,14 @@ def main():
     master_logger.info(f'----- Total # of test batch: {total_batch_test}')
     master_logger.info(f'----- Total # of base batch: {total_batch_base}')
 
-    if config.ckp:
-        if (config.ckp).endswith('.pdparams'):
-            raise ValueError(f'{config.ckp} should not contain .pdparams')
-        assert os.path.isfile(config.ckp + '.pdparams'), "{} doesn't exist!".format(config.ckp + '.pdparams')
-        model_state = paddle.load(config.ckp + '.pdparams')
+    if config.pretrained:
+        if (config.pretrained).endswith('.pdparams'):
+            raise ValueError(f'{config.pretrained} should not contain .pdparams')
+        assert os.path.isfile(config.pretrained + '.pdparams'), "{} doesn't exist!".format(config.pretrained + '.pdparams')
+        model_state = paddle.load(config.pretrained + '.pdparams')
         model.set_dict(model_state)
         master_logger.info(
-            "----- Pretrained: Load model state from {}".format(config.ckp + '.pdparams'))
+            "----- Pretrained: Load model state from {}".format(config.pretrained + '.pdparams'))
 
     if config.eval:
         master_logger.info('----- Start Validating')
@@ -231,17 +231,16 @@ def main():
             if mAP > Best_mAP:
                 Best_mAP = mAP
                 best_val_epoch = epoch
-                if config.save_path is not None:
-                    path_save = os.path.join(save_path, "bit_{}".format(config.bit))
-                    if not os.path.exists(path_save):
-                        os.makedirs(path_save)
-                    master_logger.info(f"save in {path_save}")
-                    path_save = os.path.join(path_save, config.dataset)
-                    paddle.save(optimizer.state_dict(), path_save + ".pdopt")
-                    paddle.save(model.state_dict(), path_save + ".pdparams")
+                if config.output_dir is not None:
+                    if not os.path.exists(config.output_dir):
+                        os.makedirs(config.output_dir)
+                    save_path = os.path.join(config.output_dir, "model_best_{}".format(config.bit))
+                    master_logger.info(f"save in {save_path}")
+                    paddle.save(optimizer.state_dict(), save_path + ".pdopt")
+                    paddle.save(model.state_dict(), save_path + ".pdparams")
                     master_logger.info(f'Max mAP so far: {Best_mAP:.4f} at epoch_{best_val_epoch}')
-                    master_logger.info(f"----- Save BEST model: {path_save}.pdparams")
-                    master_logger.info(f"----- Save BEST optim: {path_save}.pdopt")
+                    master_logger.info(f"----- Save BEST model: {save_path}.pdparams")
+                    master_logger.info(f"----- Save BEST optim: {save_path}.pdopt")
             master_logger.info("{} epoch:{}, bit:{}, dataset:{}, MAP:{:.3f}, Best MAP(e{}): {:.3f}".format(
                 config.model, epoch, config.bit, config.dataset, mAP, best_val_epoch, Best_mAP))
     master_logger.info("Training completed for {}({}).".format(config.model, config.bit))

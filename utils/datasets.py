@@ -38,6 +38,9 @@ def config_dataset(config):
     elif config.dataset == "coco":
         config.topK = 5000
         config.num_class = 80
+    elif config.dataset == "coco_lite":
+        config.topK = 5000
+        config.num_class = 80
     elif config.dataset == "imagenet":
         config.topK = 1000
         config.num_class = 100

@@ -26,7 +26,7 @@ warnings.filterwarnings('ignore')
 from models import HashNet
 from utils.datasets import get_data, get_dataloader, config_dataset
 from utils.datasets import image_transform
-from utils.tools import CalcHammingDist
+from utils.tools import CalcHammingDist, save_database_code
 
 ckp_list = {
     16: "output/weights_16",
@@ -72,12 +72,7 @@ def predict(model, image, database_dataset, database_loader, path='./output', bi
     else:
         print("----- Not Found: code and label of database!")
         print("----- Ready to compute {} bits code for database".format(bit))
-        bs, clses = [], []
-        for img, cls, _ in tqdm(database_loader, desc="Computing Database Code"):
-            clses.append(cls)
-            bs.append(model(img))
-        database_code, _ =  paddle.concat(bs).sign().numpy(), paddle.concat(clses).numpy()
-        np.save(code_path, database_code)
+        database_code = save_database_code(model, database_loader, code_path, save=True)
         print("----- Save code and label of database in path: {}".format(code_path))
 
     # matching

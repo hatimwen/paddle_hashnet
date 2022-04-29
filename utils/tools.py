@@ -58,3 +58,23 @@ def CalcTopMap(rB, qB, retrievalL, queryL, topk):
         topkmap = topkmap + topkmap_
     topkmap = topkmap / num_query
     return topkmap
+
+
+def save_database_code(model, database_loader, code_path, save=True):
+    """save_database_code
+    Compute bits code for database.
+    Args:
+        model
+        database_loader
+        code_path: the path where to save database_code.
+        save: set as True by default.
+    Returns: database_code
+    """
+    bs = []
+    for img, _, _ in tqdm(database_loader, desc="Computing Database Code"):
+        bs.append(model(img))
+    database_code =  paddle.concat(bs).sign().numpy()
+    if save:
+        np.save(code_path, database_code)
+        print("----- Save code and label of database in path: {}".format(code_path))
+    return database_code

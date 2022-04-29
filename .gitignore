@@ -15,3 +15,5 @@ logs/
 nohup.out
 .DS_Store
 *.pdparams
+tipc_output/
+my_*

@@ -11,9 +11,10 @@
          * [step3: 验证模型](#step3-验证模型)
          * [step4: 训练模型](#step4-训练模型)
          * [step5: 验证预测](#step5-验证预测)
-      * [六、代码结构与详细说明](#六代码结构与详细说明)
-      * [七、模型信息](#七模型信息)
-      * [八、参考及引用](#八参考及引用)
+      * [六、TIPC](#六tipc)
+      * [七、代码结构与详细说明](#七代码结构与详细说明)
+      * [八、模型信息](#八模型信息)
+      * [九、参考及引用](#九参考及引用)
 
 - 原论文：[HashNet: Deep Learning to Hash by Continuation](https://openaccess.thecvf.com/content_ICCV_2017/papers/Cao_HashNet_Deep_Learning_ICCV_2017_paper.pdf).
 
@@ -141,7 +142,15 @@ python predict.py \
 
 显然，匹配结果正确。
 
-## 六、代码结构与详细说明
+## 六、TIPC
+
+- 本项目为 16/32/48/64 bits 分别写了对应的 TIPC 配置文件， 均位于 [test_tipc/configs](test_tipc/configs/) 文件夹下；另外方便起见， [scripts/tipc.sh](scripts/tipc.sh) 是一个直接跑所有 bits 的脚本；
+
+- 详细日志放置在 [test_tipc/output](test_tipc/output/) 目录下；
+
+- 具体 TIPC 介绍及使用流程请参阅：[test_tipc/README.md](test_tipc/README.md)。
+
+## 七、代码结构与详细说明
 
 ```
 |-- paddle_hashnet
@@ -150,6 +159,18 @@ python predict.py \
             |-- database.txt        # 数据库list
             |-- test.txt            # 测试集list
             |-- train.txt           # 训练集list
+        |-- coco_lite           # 用于 TIPC 验证的少量数据list
+            |-- database.txt        # 数据库list
+            |-- test.txt            # 测试集list
+            |-- train.txt           # 训练集list
+    |-- datasets            # 数据集存放位置
+        |-- coco_lite           # 用于 TIPC 验证的少量数据集
+            |-- train2014           # 训练集图片
+            |-- val2014             # 测试集图片
+    |-- deploy
+        |-- inference_python
+            |-- infer.py            # TIPC 推理代码
+            |-- README.md           # TIPC 推理流程介绍
     |-- models              # 模型定义
         |-- __init__.py
         |-- alexnet.py          # AlexNet 定义，注意这里有略微有别于 paddle 集成的 AlexNet
@@ -169,27 +190,30 @@ python predict.py \
         |-- weights_32.pdparams     # 32bits的模型权重
         |-- weights_48.pdparams     # 48bits的模型权重
         |-- weights_64.pdparams     # 64bits的模型权重
-        |-- database_code_16.npy       # 数据库通过HashNet得到的16bits编码
-        |-- database_code_32.npy       # 数据库通过HashNet得到的32bits编码
-        |-- database_code_48.npy       # 数据库通过HashNet得到的48bits编码
-        |-- database_code_64.npy       # 数据库通过HashNet得到的64bits编码
+        |-- database_code_16.npy    # 数据库通过HashNet得到的16bits编码
+        |-- database_code_32.npy    # 数据库通过HashNet得到的32bits编码
+        |-- database_code_48.npy    # 数据库通过HashNet得到的48bits编码
+        |-- database_code_64.npy    # 数据库通过HashNet得到的64bits编码
     |-- scripts
         |-- test_multi_gpu.sh   # 多卡测试脚本
         |-- test_single_gpu.sh  # 单卡测试脚本
+        |-- tipc.sh             # TIPC 脚本
         |-- train_multi_gpu.sh  # 多卡训练脚本
         |-- train_single_gpu.sh # 单卡训练脚本
+    |-- test_tipc               # 飞桨训推一体认证（TIPC）
     |-- utils
         |-- datasets.py         # dataset, dataloader, transforms
         |-- loss.py             # HashNetLoss 定义
         |-- lr_scheduler.py     # 学习率策略定义
-        |-- tools.py            # mAP计算；随机数种子固定函数
+        |-- tools.py            # mAP计算；随机数种子固定函数；database_code计算
+    |-- export_model.py     # 模型动态转静态代码
     |-- main_multi_gpu.py   # 多卡训练测试代码
     |-- main_single_gpu.py  # 单卡训练测试代码
     |-- predict.py          # 预测演示代码
     |-- README.md
 ```
 
-## 七、模型信息
+## 八、模型信息
 
 关于模型的其他信息，可以参考下表：
 
@@ -205,7 +229,7 @@ python predict.py \
 | 在线运行 | AI Studio 脚本项目即将公布|
 | License | [Apache 2.0 license](LICENCE)|
 
-## 八、参考及引用
+## 九、参考及引用
 
 ```
 @inproceedings{cao2017hashnet,
