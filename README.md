@@ -231,7 +231,7 @@ python predict.py \
 
 ## 九、参考及引用
 
-```
+```BibTeX
 @inproceedings{cao2017hashnet,
   title={Hashnet: Deep learning to hash by continuation},
   author={Cao, Zhangjie and Long, Mingsheng and Wang, Jianmin and Yu, Philip S},
