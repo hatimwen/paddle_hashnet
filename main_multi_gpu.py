@@ -162,7 +162,7 @@ def main_worker(*args):
         assert os.path.isfile(config.pretrained + '.pdparams'), "{} doesn't exist!".format(config.pretrained + '.pdparams')
         model_state = paddle.load(config.pretrained + '.pdparams')
         model.set_dict(model_state)
-        master_logger.info(
+        local_logger.info(
             "----- Pretrained: Load model state from {}".format(config.pretrained + '.pdparams'))
         if local_rank == 0:
             master_logger.info(
