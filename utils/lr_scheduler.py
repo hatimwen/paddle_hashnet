@@ -21,12 +21,13 @@ class DecreaseLRScheduler(LRScheduler):
                  learning_rate,
                  start_lr,
                  de_step=50,
-                 gamma=0.5):
+                 gamma=0.5,
+                 last_epoch=-1):
         """init DecreaseLRScheduler """
         self.start_lr = start_lr
         self.de_step = de_step
         self.gamma = gamma
-        super(DecreaseLRScheduler, self).__init__(learning_rate)
+        super(DecreaseLRScheduler, self).__init__(learning_rate, last_epoch)
 
     def get_lr(self):
         t = self.last_epoch

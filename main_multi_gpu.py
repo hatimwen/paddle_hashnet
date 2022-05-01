@@ -188,7 +188,8 @@ def main_worker(*args):
 
     scheduler = DecreaseLRScheduler(learning_rate=config.learning_rate,
                                     start_lr=config.learning_rate,
-                                    de_step=config.de_step)
+                                    de_step=config.de_step,
+                                    last_epoch=last_epoch)
     if config.optimizer == "SGD":
         optimizer = paddle.optimizer.Momentum(
             parameters=model.parameters(),
