@@ -43,8 +43,11 @@ def main(args):
     model = HashNet(args.bit)
 
     if args.load_ckp:
-        if args.pretrained is not None and os.path.isfile(args.pretrained):
-            para_state_dict = paddle.load(args.pretrained)
+        if args.pretrained is not None:
+            if (args.pretrained).endswith('.pdparams'):
+                raise ValueError(f'{args.pretrained} should not contain .pdparams')
+            assert os.path.isfile(args.pretrained + '.pdparams'), "{} doesn't exist!".format(args.pretrained + '.pdparams')
+            para_state_dict = paddle.load(args.pretrained + '.pdparams')
         else:
             ckp = ckp_list[args.bit]
             para_state_dict = paddle.load(ckp)

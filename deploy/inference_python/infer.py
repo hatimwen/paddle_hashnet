@@ -143,6 +143,8 @@ class InferenceEngine(object):
         if os.path.isfile(code_path):
             database_code = np.load(code_path)
         else:
+            if not os.path.exists(self.args.save_path):
+                os.makedirs(self.args.save_path, exist_ok=True)
             database_code = self.save_database_code(code_path)
         print("----- Load code of database from {}".format(code_path))
 

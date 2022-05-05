@@ -17,36 +17,36 @@ database 13
 /home/super/anaconda3/envs/paddle_wenht/lib/python3.7/site-packages/paddle/vision/transforms/functional_pil.py:41: DeprecationWarning: HAMMING is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.HAMMING instead.
   'hamming': Image.HAMMING
 ----- Load code of database from ./tipc_output/database_code_16.npy
-[2022/04/29 19:52:33] root INFO: 
+[2022/05/05 14:42:42] root INFO: 
 
-[2022/04/29 19:52:33] root INFO: ---------------------- Env info ----------------------
-[2022/04/29 19:52:33] root INFO:  OS_version: CentOS Linux 7
-[2022/04/29 19:52:33] root INFO:  CUDA_version: 11.1.74
+[2022/05/05 14:42:42] root INFO: ---------------------- Env info ----------------------
+[2022/05/05 14:42:42] root INFO:  OS_version: CentOS Linux 7
+[2022/05/05 14:42:42] root INFO:  CUDA_version: 11.1.74
 Build cuda_11.1.TC455_06.29069683_0
-[2022/04/29 19:52:33] root INFO:  CUDNN_version: None.None.None
-[2022/04/29 19:52:33] root INFO:  drivier_version: 455.23.05
-[2022/04/29 19:52:33] root INFO: ---------------------- Paddle info ----------------------
-[2022/04/29 19:52:33] root INFO:  paddle_version: 2.2.2
-[2022/04/29 19:52:33] root INFO:  paddle_commit: b031c389938bfa15e15bb20494c76f86289d77b0
-[2022/04/29 19:52:33] root INFO:  log_api_version: 1.0
-[2022/04/29 19:52:33] root INFO: ----------------------- Conf info -----------------------
-[2022/04/29 19:52:33] root INFO:  runtime_device: cpu
-[2022/04/29 19:52:33] root INFO:  ir_optim: True
-[2022/04/29 19:52:33] root INFO:  enable_memory_optim: True
-[2022/04/29 19:52:33] root INFO:  enable_tensorrt: False
-[2022/04/29 19:52:33] root INFO:  enable_mkldnn: False
-[2022/04/29 19:52:33] root INFO:  cpu_math_library_num_threads: 1
-[2022/04/29 19:52:33] root INFO: ----------------------- Model info ----------------------
-[2022/04/29 19:52:33] root INFO:  model_name: example
-[2022/04/29 19:52:33] root INFO:  precision: fp32
-[2022/04/29 19:52:33] root INFO: ----------------------- Data info -----------------------
-[2022/04/29 19:52:33] root INFO:  batch_size: 1
-[2022/04/29 19:52:33] root INFO:  input_shape: dynamic
-[2022/04/29 19:52:33] root INFO:  data_num: 1
-[2022/04/29 19:52:33] root INFO: ----------------------- Perf info -----------------------
-[2022/04/29 19:52:33] root INFO:  cpu_rss(MB): 3126.0742, gpu_rss(MB): None, gpu_util: None%
-[2022/04/29 19:52:33] root INFO:  total time spent(s): 2.2634
-[2022/04/29 19:52:33] root INFO:  preprocess_time(ms): 2227.2468, inference_time(ms): 33.3939, postprocess_time(ms): 2.7373
+[2022/05/05 14:42:42] root INFO:  CUDNN_version: None.None.None
+[2022/05/05 14:42:42] root INFO:  drivier_version: 455.23.05
+[2022/05/05 14:42:42] root INFO: ---------------------- Paddle info ----------------------
+[2022/05/05 14:42:42] root INFO:  paddle_version: 2.2.2
+[2022/05/05 14:42:42] root INFO:  paddle_commit: b031c389938bfa15e15bb20494c76f86289d77b0
+[2022/05/05 14:42:42] root INFO:  log_api_version: 1.0
+[2022/05/05 14:42:42] root INFO: ----------------------- Conf info -----------------------
+[2022/05/05 14:42:42] root INFO:  runtime_device: cpu
+[2022/05/05 14:42:42] root INFO:  ir_optim: True
+[2022/05/05 14:42:42] root INFO:  enable_memory_optim: True
+[2022/05/05 14:42:42] root INFO:  enable_tensorrt: False
+[2022/05/05 14:42:42] root INFO:  enable_mkldnn: False
+[2022/05/05 14:42:42] root INFO:  cpu_math_library_num_threads: 1
+[2022/05/05 14:42:42] root INFO: ----------------------- Model info ----------------------
+[2022/05/05 14:42:42] root INFO:  model_name: example
+[2022/05/05 14:42:42] root INFO:  precision: fp32
+[2022/05/05 14:42:42] root INFO: ----------------------- Data info -----------------------
+[2022/05/05 14:42:42] root INFO:  batch_size: 1
+[2022/05/05 14:42:42] root INFO:  input_shape: dynamic
+[2022/05/05 14:42:42] root INFO:  data_num: 1
+[2022/05/05 14:42:42] root INFO: ----------------------- Perf info -----------------------
+[2022/05/05 14:42:42] root INFO:  cpu_rss(MB): 2983.5234, gpu_rss(MB): None, gpu_util: None%
+[2022/05/05 14:42:42] root INFO:  total time spent(s): 2.7482
+[2022/05/05 14:42:42] root INFO:  preprocess_time(ms): 2708.3318, inference_time(ms): 36.8013, postprocess_time(ms): 3.0167
 /home/super/anaconda3/envs/paddle_wenht/lib/python3.7/site-packages/paddle/tensor/creation.py:130: DeprecationWarning: `np.object` is a deprecated alias for the builtin `object`. To silence this warning, use `object` by itself. Doing this will not modify any behavior and is safe. 
 Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
   if data.dtype == np.object:
