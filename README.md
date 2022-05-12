@@ -226,7 +226,7 @@ python predict.py \
 | 应用场景 | 图像检索 |
 | 支持硬件 | GPU、CPU |
 | 下载链接 | [预训练模型 提取码: pa1c](https://pan.baidu.com/s/1vQvv6aSuqMcqR3PEqxs91g)  |
-| 在线运行 | AI Studio 脚本项目即将公布|
+| 在线运行 | [AI Studio](https://aistudio.baidu.com/aistudio/projectdetail/3964755?shared=1)|
 | License | [Apache 2.0 license](LICENCE)|
 
 ## 九、参考及引用
