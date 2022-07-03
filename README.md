@@ -1,5 +1,7 @@
 # 基于 PaddlePaddle 实现 HashNet(ICCV2017)
 
+简体中文 | [English](./README_en.md)
+
    * [paddle_hashnet](#基于-paddlepaddle-实现-hashneticcv2017)
       * [一、简介](#一简介)
       * [二、复现精度](#二复现精度)
